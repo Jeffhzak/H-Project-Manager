@@ -18,6 +18,7 @@ function App() {
         <p>
           Edit <code>App.jsx</code> and save to test HMR updates.
         </p>
+        <h1 className='text-5xl font-bold underline text-cyan-600'>test</h1>
         <p>
           <a
             className="App-link"
