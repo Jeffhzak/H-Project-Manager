@@ -5,9 +5,6 @@ const Cards = require("../models/cards");
 
 //! SEED/SYNC
 const URL = "https://api.trello.com/1";
-const PLACEHOLDER = "jeffc138";
-const KEY = process.env.TRELLO_KEY;
-const TOKEN = process.env.TRELLO_TOKEN;
 
 const syncCards = async (req, res) => {
     if (!req.body) {
@@ -18,16 +15,14 @@ const syncCards = async (req, res) => {
     }
     
     //! !!!!!!!!!!!!!!!!
-    const boardArray = req.body.boardArray;
-    console.log(boardArray);
+    const boardArray = req.body.userData.boardArray;
+    const KEY = req.body.userData.TRELLO_KEY;
+    const TOKEN = req.body.userData.TRELLO_TOKEN;
     //! !!!!!!!!!!!!!!!!
 
     try {
-        
-        const response = await axios.get(`${URL}/members/${PLACEHOLDER}/boards?key=${KEY}&token=${TOKEN}`);
-        // console.log(response.data);
-        //! response.data here is the board information for this user => proceed to create all cards on these boards.
-        response.data.forEach(async board => {
+
+        boardArray.forEach(async board => {
             const boardID = board.shortLink;
             const response = await axios.get(`${URL}/boards/${boardID}/cards?key=${KEY}&token=${TOKEN}`);
             // console.log(response.data);

@@ -24,7 +24,7 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(async () => {
-
+        console.log("authprovider useEffect fired");
         // console.log(`${URL}/members/${userData.trelloName}/boards?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}`)
         const res = await axios.get(`${URL}/members/${userData.trelloName}/boards?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}`);
         
