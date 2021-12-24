@@ -44,7 +44,29 @@ const syncCards = async (req, res) => {
     }
 }
 
+//! GET
 
+const getCardsOnBoard = async (req, res) => {
+    const {boardID} = req.params;
+
+    try {
+        const CardsOnBoard = await Cards.find({idBoard:boardID});
+        console.log(CardsOnBoard);
+        res.status(201).json({
+            success: true,
+            data: CardsOnBoard,
+            message: "Cards found!",
+        })
+    } catch (error) {
+        res.status(400).json({
+            error,
+            message: "find failed!"
+        });
+    }
+
+    
+}
 module.exports = {
     syncCards,
+    getCardsOnBoard,
 }

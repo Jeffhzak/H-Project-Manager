@@ -25,13 +25,14 @@ export const AuthProvider = ({children}) => {
 
     useEffect(async () => {
         console.log("authprovider useEffect fired");
-        // console.log(`${URL}/members/${userData.trelloName}/boards?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}`)
+        
         const res = await axios.get(`${URL}/members/${userData.trelloName}/boards?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}`);
         
         const boardData = res.data;
         const boardArray = [];
         
         boardData.forEach(board => {
+
             boardArray.push({
                 name: board.name,
                 desc: board.desc,
@@ -40,12 +41,13 @@ export const AuthProvider = ({children}) => {
                 url: board.url,
             })
         });
-        
+        // console.log(boardArray)
         const newUserData = {...userData, boardArray};
         setUserData(newUserData);
-        
+
         setLoading(false);
     }, [])
+
 
     const value = {
         userData,

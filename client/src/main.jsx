@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {} from "react-router-dom"
 import { FourOhFour } from './Navigation/FourOhFour';
 import { AuthProvider } from './Authentication/AuthProvider';
+import { Boards } from './Navigation/Boards';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,8 +14,10 @@ ReactDOM.render(
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
+          <Route path="/boards/:boardName/:boardID" element={<Boards/>}/>
+          <Route path="404" element={<FourOhFour/>} />
+          <Route path="*" element={<FourOhFour/>} />
         </Route>
-        <Route path="*" element={<FourOhFour/>} />
       </Routes>
       </BrowserRouter>
     </AuthProvider>
