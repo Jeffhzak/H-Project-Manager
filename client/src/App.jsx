@@ -20,7 +20,7 @@ function App() {
     const boardBlocks = userData.boardArray.map((boardData, index) => {
       return (
         <Link to={`/boards/${boardData.name}/${boardData.id}`} key={`${index}+${boardData.id}`}>
-          <div className="inverted rounded shadow-md hover:border-2 hover:border-primary hover:cursor-pointer w-28 h-20 flex justify-center items-center">
+          <div className="inverted uppercase rounded shadow-md hover:border-2 hover:border-primary hover:cursor-pointer w-28 h-20 flex justify-center items-center">
             <span>{boardData.name}</span>
           </div>
         </Link>
