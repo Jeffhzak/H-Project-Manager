@@ -1,19 +1,22 @@
-import { Outlet } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import { Link } from "react-router-dom"
 import { useAuth } from "./Authentication/AuthProvider"
-import { useEffect } from "react"
 import axios from "axios"
 
 
 function App() {
 
   const {userData} = useAuth();
+  const navigate = useNavigate();
 
   const forceSync = async () => {
     axios.put(`http://localhost:3001/api/cards/sync`, 
     {
       userData,
     });
+    alert("Force Sync complete!");
+    navigate("/", {replace: true});
+
   }
 
   const boardSelectRender = () => {

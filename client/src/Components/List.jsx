@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card } from './Card';
 
 export const List = ({list, cards}) => {
     console.log(list);
@@ -16,7 +17,7 @@ export const List = ({list, cards}) => {
         const cardsRender = thisListsCards.map((card) => {
             return(
                 <>
-                <span>{card.name}</span>
+                <Card card={card} />
                 </>
             )
         }) 
@@ -25,7 +26,7 @@ export const List = ({list, cards}) => {
     }
 
     return (
-        <div className="bg-bgl rounded p-2 w-96 flex flex-col">
+        <div className="bg-bgl rounded p-2 w-96 flex flex-col gap-1">
             <span className="text-primary text-xl font-bold uppercase">{list.name}</span>
             {renderCards()}
         </div>

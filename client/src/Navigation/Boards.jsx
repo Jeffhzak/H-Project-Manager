@@ -4,10 +4,8 @@ import { useParams, useNavigate } from 'react-router';
 import { useAuth } from "../Authentication/AuthProvider";
 import axios from "axios";
 import { List } from '../Components/List';
+import { LoadingBar } from '../Components/LoadingBar';
 
-
-const TRELLO_KEY = import.meta.env.VITE_TRELLO_KEY;
-const TRELLO_TOKEN = import.meta.env.VITE_TRELLO_TOKEN;
 
 const URL = "https://api.trello.com/1";
 
@@ -23,12 +21,13 @@ export const Boards = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect( async () => {
+
         setLoading(true);
 
         try {
             const fetchList = await axios.get(`${URL}/boards/${boardID}/lists?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}`);
             const listData = fetchList.data;
-            console.log("listData", listData)
+            // console.log("listData", listData)
             setLists(listData);
 
         } catch (error) {
@@ -39,7 +38,7 @@ export const Boards = () => {
 
         const fetchCards = await axios.get(`http://localhost:3001/api/cards/${boardID}`);
         const cardsData = fetchCards.data;
-        console.log("cardsData", cardsData.data);
+        // console.log("cardsData", cardsData.data);
         setCards(cardsData.data);
 
         setLoading(false);
@@ -61,7 +60,7 @@ export const Boards = () => {
         <>
             <span>Hello Boards :) {boardID}</span>
             <div className="w-full lg:w-4/5 bg-secondary m-auto rounded p-2 flex gap-2 bg-opacity-50">
-            {!loading ? renderLists() : null}
+            {!loading ? renderLists() : <LoadingBar/>}
             </div>
         </>
     )
