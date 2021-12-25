@@ -26,12 +26,12 @@ const syncCards = async (req, res) => {
             const boardID = board.shortLink;
 
             const response = await axios.get(`${URL}/boards/${boardID}/cards?key=${KEY}&token=${TOKEN}`);
-            console.log(response.data);
+            // console.log(response.data);
             const ArrayOfCards = response.data.map((card) => {
                 const idCard = card.id;
                 return {...card, idCard:idCard};
             });
-            console.log(ArrayOfCards);
+            // console.log(ArrayOfCards);
             await Cards.deleteMany({});
             await Cards.create(ArrayOfCards);
         });
@@ -49,7 +49,7 @@ const syncCards = async (req, res) => {
     }
 }
 
-//! SHOW
+//! READ
 
 const getCardsOnBoard = async (req, res) => {
     const {boardID} = req.params;
@@ -102,8 +102,46 @@ const createNewCard = async (req, res) => {
     }
 }
 
+//! UPDATE
+
+const editCard = async (req, res) => {
+    const { id } = req.params; 
+    if(!id) {
+        return res.status(400).json({
+            success: false,
+            error: "Please provide mongo ID to update."
+        });
+    }
+    if(!req.body) {
+        return res.status(400).json({
+            success: false,
+            error: "Please provide new card data from Trello."
+        });
+    }
+    if(!req.body.name) {
+        return res.status(400).json({
+            success: false,
+            error: "Name field is mandatory."
+        });
+    }
+
+    try {
+        const newCard = await Cards.findByIdAndUpdate(id, req.body);
+        res.status(201).json({
+            success: true,
+            newCard: newCard,
+            message: "Card successfully updated!",
+        })
+    } catch (error) {
+        res.status(400).json({
+            error,
+            message: "Card update failed! invalid ID?",
+        })
+    }
+}
 module.exports = {
     syncCards,
     getCardsOnBoard,
     createNewCard,
+    editCard,
 }

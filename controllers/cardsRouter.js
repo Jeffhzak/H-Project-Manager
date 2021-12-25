@@ -11,4 +11,7 @@ router.get("/:boardID", cardsController.getCardsOnBoard);
 //! CREATE
 router.post("/new", cardsController.createNewCard);
 
+//! UPDATE
+router.put("/:id", cardsController.editCard);
+
 module.exports = router;

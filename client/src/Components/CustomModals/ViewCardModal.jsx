@@ -24,6 +24,7 @@ export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, edit
     const handleSubmit = () => {
         
         editCard(cardDetails);
+        setEditMode(false);
     }
     
     return (
