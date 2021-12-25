@@ -2,7 +2,7 @@ import React from 'react'
 import { AddNewCard } from './AddNewCard';
 import { Card } from './Card';
 
-export const List = ({list, cards, setOpenCreateModal, setcurrList, setOpenViewModal}) => {
+export const List = ({list, cards, setOpenCreateModal, setcurrList, setOpenViewModal, setCurrCardDetails}) => {
     // console.log(list);
     // console.log(cards);
 
@@ -17,7 +17,7 @@ export const List = ({list, cards, setOpenCreateModal, setcurrList, setOpenViewM
         
         const cardsRender = thisListsCards.map((card, index) => {
             return(
-                <Card key={`${card.id}+${index}`} card={card} setOpenViewModal={setOpenViewModal}/>
+                <Card key={`${card.id}+${index}`} card={card} setOpenViewModal={setOpenViewModal} setCurrCardDetails={setCurrCardDetails}/>
             )
         }) 
 

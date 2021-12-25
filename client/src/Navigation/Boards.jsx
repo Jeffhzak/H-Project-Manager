@@ -79,15 +79,43 @@ export const Boards = () => {
             setOpenCreateModal(false);
 
         } catch (error) {
-            const trelloRes = error.response.data.error.message;
-            const apiRes = error.response.data.message;
+            const trelloRes = error?.response?.data;
+            const apiRes = error?.response?.data?.message;
             if (!!trelloRes) alert (trelloRes);
             else alert(apiRes);
             navigate("/404", {replace: true});
         }
     }
 
+    const editCard = async (editedCard) => {
+        console.log(editedCard);
+        const idCard = editedCard.idCard;
+        const name = editedCard.name;
+        const desc = editedCard.desc;
 
+        try {
+            if (name.length === 0) return alert("name field is mandatory!");
+            const response = await axios.put(`${URL}/cards/${idCard}?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}&id=${idCard}&name=${name}&desc=${desc}`);
+            const newCard = response.data;
+
+            console.log(newCard);
+
+            // const response2 = await axios.post(`http://localhost:3001/api/cards/new`, newCard)
+
+            // console.log("response2",response2)
+
+            // setCards([...cards, newCard]);
+
+            // setOpenCreateModal(false);
+
+        } catch (error) {
+            const trelloRes = error?.response?.data;
+            const apiRes = error?.response.data?.message;
+            if (!!trelloRes) alert (trelloRes);
+            else alert(apiRes);
+            navigate("/404", {replace: true});
+        }
+    }
     
     //?
     //! MODAL RELATED FUNCTIONS
@@ -102,6 +130,7 @@ export const Boards = () => {
                 setOpenCreateModal={setOpenCreateModal} 
                 setcurrList={setcurrList}
                 setOpenViewModal={setOpenViewModal}
+                setCurrCardDetails={setCurrCardDetails}
                 />
             )
         })
@@ -114,16 +143,22 @@ export const Boards = () => {
             <div className="w-full lg:w-4/5 bg-secondary m-auto rounded p-2 flex gap-2 bg-opacity-50">
             {!loading ? renderLists() : <LoadingBar/>}
             </div>
+
             {openCreateModal 
             ? 
             <NewCardModal 
+            currList={currList}
             setOpenCreateModal={setOpenCreateModal}
             createNewCard={createNewCard} />
             : null}
+
             {openViewModal 
             ? 
             <ViewCardModal 
-            setOpenViewModal={setOpenViewModal} />
+            currList={currList}
+            setOpenViewModal={setOpenViewModal}
+            currCardDetails={currCardDetails}
+            editCard={editCard} />
             : null}
         </>
     )

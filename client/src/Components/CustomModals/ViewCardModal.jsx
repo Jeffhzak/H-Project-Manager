@@ -2,11 +2,10 @@ import React from 'react'
 import { useState } from 'react'
 import { Modal } from '../Modal'
 
-export const ViewCardModal = ({setOpenViewModal}) => {
-    const [cardDetails, setCardDetails] = useState({
-        name: "",
-        desc: "",
-    })
+export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, editCard}) => {
+    const [cardDetails, setCardDetails] = useState(currCardDetails);
+
+    const [editMode, setEditMode] = useState(false);
 
     const handleChange = (event) => {
         const key = event.target.id;
@@ -14,19 +13,31 @@ export const ViewCardModal = ({setOpenViewModal}) => {
         setCardDetails({...cardDetails, [key]:val})
     }
 
-    const handleSubmit = () => {
-        // createNewCard(cardDetails);
+    const handleEdit = () => {
+        if (editMode === false) return setEditMode(true);
+        if (editMode === true) {
+            setCardDetails(currCardDetails);
+            setEditMode(false);
+        }
     }
 
+    const handleSubmit = () => {
+        
+        editCard(cardDetails);
+    }
+    
     return (
         <Modal open={setOpenViewModal}>
-            <div className="title">
+            <div className="title flex flex-col">
 
-                <span>New Card</span>
+                <span className="text-primary text-xl font-bold uppercase">{editMode ? "Edit Card" : "View Card"}</span>
+                <span className="text-xs">in List: {currList.name}</span>
 
             </div>
-            <div className="body flex flex-col gap-2">
 
+            {editMode
+            ?
+            <div className="body flex flex-col gap-2 pt-2">
                 <input 
                 id="name" 
                 type="text" 
@@ -40,16 +51,31 @@ export const ViewCardModal = ({setOpenViewModal}) => {
                 value={cardDetails.desc} 
                 onChange={handleChange}
                 placeholder="Description (optional)"
-                className="text_input"></textarea>
-
+                className="text_input h-40"></textarea>
             </div>
+            :
+            <div className="body flex flex-col gap-2 pt-2">
+                <span className="text-gray-700 uppercase font-bold text-lg">{cardDetails.name}</span>
+                <span className="text-gray-700">{cardDetails.desc}</span>
+            </div>
+            }
+
+            {editMode
+            ?
             <div className="footer flex flex-row-reverse gap-2 pt-2">
 
                 <button className="bg-primary btn_neutral" onClick={handleSubmit}>Confirm</button>
-                <button className="bg-bgl btn_neutral" onClick={() => setOpenViewModal(false)}>Cancel</button>
-                {/* <button onClick={() => createNewCard({name:"testname", desc:"testdesc"})}>TEST CREATE NEW CARD</button> */}
+                <button className="bg-bgl btn_neutral" onClick={handleEdit}>Cancel</button>
 
             </div>
+            :
+            <div className="footer flex flex-row-reverse gap-2 pt-2">
+
+                <button className="bg-primary btn_neutral" onClick={handleEdit}>Edit</button>
+                <button className="bg-bgl btn_neutral" onClick={() => setOpenViewModal(false)}>Close</button>
+
+            </div>
+            }
         </Modal> 
     )
 }

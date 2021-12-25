@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Modal } from '../Modal'
 
-export const NewCardModal = ({setOpenCreateModal, createNewCard}) => {
+export const NewCardModal = ({currList, setOpenCreateModal, createNewCard}) => {
     const [cardDetails, setCardDetails] = useState({
         name: "",
         desc: "",
@@ -20,12 +20,13 @@ export const NewCardModal = ({setOpenCreateModal, createNewCard}) => {
 
     return (
         <Modal open={setOpenCreateModal}>
-            <div className="title">
+            <div className="title flex flex-col">
 
-                <span>New Card</span>
+                <span className="text-primary text-xl font-bold uppercase">New Card</span>
+                <span className="text-xs">in List: {currList.name}</span>
 
             </div>
-            <div className="body flex flex-col gap-2">
+            <div className="body flex flex-col gap-2 pt-2">
 
                 <input 
                 id="name" 
@@ -40,7 +41,7 @@ export const NewCardModal = ({setOpenCreateModal, createNewCard}) => {
                 value={cardDetails.desc} 
                 onChange={handleChange}
                 placeholder="Description (optional)"
-                className="text_input"></textarea>
+                className="text_input h-40"></textarea>
 
             </div>
             <div className="footer flex flex-row-reverse gap-2 pt-2">

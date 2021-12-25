@@ -1,11 +1,11 @@
 import React from 'react'
 
-export const Card = ({card, setOpenViewModal}) => {
+export const Card = ({card, setOpenViewModal, setCurrCardDetails}) => {
 
     const borderDraw = card.desc.length > 0 ? "text-sm border-t-2 border-primary border-opacity-20" : "text-sm";
 
     const handleClick = () => {
-        
+        setCurrCardDetails(card);
         setOpenViewModal(true);
     }
     return (

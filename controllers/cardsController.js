@@ -24,9 +24,14 @@ const syncCards = async (req, res) => {
 
         boardArray.forEach(async board => {
             const boardID = board.shortLink;
+
             const response = await axios.get(`${URL}/boards/${boardID}/cards?key=${KEY}&token=${TOKEN}`);
-            // console.log(response.data);
-            const ArrayOfCards = response.data;
+            console.log(response.data);
+            const ArrayOfCards = response.data.map((card) => {
+                const idCard = card.id;
+                return {...card, idCard:idCard};
+            });
+            console.log(ArrayOfCards);
             await Cards.deleteMany({});
             await Cards.create(ArrayOfCards);
         });
