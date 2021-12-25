@@ -2,7 +2,7 @@ import React from 'react'
 import { AddNewCard } from './AddNewCard';
 import { Card } from './Card';
 
-export const List = ({list, cards, createNewCard}) => {
+export const List = ({list, cards, setOpenCreateModal, setCurrListID}) => {
     // console.log(list);
     // console.log(cards);
 
@@ -28,7 +28,7 @@ export const List = ({list, cards, createNewCard}) => {
         <div className="bg-bgl rounded p-2 w-96 flex flex-col gap-1">
             <span className="text-primary text-xl font-bold uppercase">{list.name}</span>
             {renderCards()}
-            <AddNewCard createNewCard={() => {createNewCard(list.id)}}/>
+            <AddNewCard setOpenCreateModal={setOpenCreateModal} listID={list.id} setCurrListID={setCurrListID}/>
         </div>
     )
 }

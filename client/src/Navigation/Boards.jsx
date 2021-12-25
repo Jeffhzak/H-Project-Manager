@@ -5,7 +5,7 @@ import { useAuth } from "../Authentication/AuthProvider";
 import axios from "axios";
 import { List } from '../Components/List';
 import { LoadingBar } from '../Components/LoadingBar';
-import { Modal } from '../Components/Modal';
+import { NewCardModal } from '../Components/CustomModals/NewCardModal';
 
 
 const URL = "https://api.trello.com/1";
@@ -20,6 +20,8 @@ export const Boards = () => {
     const [lists, setLists] = useState([]);
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [currListID, setCurrListID] = useState("");
     const [openCreateModal, setOpenCreateModal] = useState(false);
 
     useEffect( async () => {
@@ -51,9 +53,29 @@ export const Boards = () => {
     //! MODAL RELATED FUNCTIONS
     //*
     
-    const createNewCard = (listID) => {
-        setOpenCreateModal(true);
-        console.log(listID)
+    const createNewCard = async (body) => {
+        const {name, desc} = body;
+        
+        // console.log(currListID);
+        // console.log(name);
+        // console.log(desc);
+
+        try {
+            const response = await axios.post(`${URL}/cards?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}&idList=${currListID}&name=${name}&desc=${desc}`);
+            const newCard = response.data;
+
+            // console.log(newCard);
+
+            const response2 = await axios.post(`http://localhost:3001/api/cards/new`, newCard)
+
+            console.log("response2",response2)
+
+            setCards([...cards, newCard]);
+
+        } catch (error) {
+            alert(error.response);
+            navigate("/404", {replace: true});
+        }
     }
     
     //?
@@ -65,7 +87,7 @@ export const Boards = () => {
         const listRender = lists.map((list, index) => {
             
             return (
-                <List key={`${list.id}+${index}`} list={list} cards={cards} createNewCard={createNewCard}/>
+                <List key={`${list.id}+${index}`} list={list} cards={cards} setOpenCreateModal={setOpenCreateModal} setCurrListID={setCurrListID}/>
             )
         })
         return listRender;
@@ -77,7 +99,12 @@ export const Boards = () => {
             <div className="w-full lg:w-4/5 bg-secondary m-auto rounded p-2 flex gap-2 bg-opacity-50">
             {!loading ? renderLists() : <LoadingBar/>}
             </div>
-            {openCreateModal ? <Modal setOpenCreateModal={setOpenCreateModal} /> : null}
+            {openCreateModal 
+            ? 
+            <NewCardModal 
+            setOpenCreateModal={setOpenCreateModal}
+            createNewCard={createNewCard} />
+            : null}
         </>
     )
 }

@@ -44,7 +44,7 @@ const syncCards = async (req, res) => {
     }
 }
 
-//! GET
+//! SHOW
 
 const getCardsOnBoard = async (req, res) => {
     const {boardID} = req.params;
@@ -63,10 +63,36 @@ const getCardsOnBoard = async (req, res) => {
             message: "find failed!"
         });
     }
-
-    
 }
+
+//! CREATE
+
+const createNewCard = async (req, res) => {
+
+    if(!req.body) {
+        return res.status(400).json({
+            success: false,
+            error: "Please provide new card data from Trello."
+        });
+    }
+
+    try {
+        const newCard = await Cards.create(req.body);
+        res.status(201).json({
+            success: true,
+            newCard: newCard,
+            message: "Card successfully created!",
+        })
+    } catch (error) {
+        res.status(400).json({
+            error,
+            message: "Card creation failed!",
+        })
+    }
+}
+
 module.exports = {
     syncCards,
     getCardsOnBoard,
+    createNewCard,
 }
