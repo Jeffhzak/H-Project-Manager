@@ -47,7 +47,7 @@ function App() {
           <button className="btn" onClick={()=>forceSync()}>Force Sync</button>
         </div>
       </div>
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-2 mb-2 justify-center">
         {boardSelectRender()}
       </div>
     <Outlet />
