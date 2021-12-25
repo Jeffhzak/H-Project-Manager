@@ -19,6 +19,14 @@ body {
   @apply border-primary border-2 rounded p-2 uppercase cursor-pointer tracking-wider bg-bgl hover:bg-primary;
 }
 
+.btn_neutral {
+  @apply text-secondary p-2 rounded uppercase;
+}
+
+.text_input {
+  @apply rounded border-2 shadow-sm p-2;
+}
+
 .shimmer {
   position: relative;
   overflow: hidden;

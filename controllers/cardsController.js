@@ -75,6 +75,12 @@ const createNewCard = async (req, res) => {
             error: "Please provide new card data from Trello."
         });
     }
+    if(!req.body.name) {
+        return res.status(400).json({
+            success: false,
+            error: "Name field is mandatory."
+        });
+    }
 
     try {
         const newCard = await Cards.create(req.body);

@@ -61,6 +61,7 @@ export const Boards = () => {
         // console.log(desc);
 
         try {
+            if (name.length === 0) return alert("name field is mandatory!");
             const response = await axios.post(`${URL}/cards?key=${userData.TRELLO_KEY}&token=${userData.TRELLO_TOKEN}&idList=${currListID}&name=${name}&desc=${desc}`);
             const newCard = response.data;
 
@@ -68,12 +69,17 @@ export const Boards = () => {
 
             const response2 = await axios.post(`http://localhost:3001/api/cards/new`, newCard)
 
-            console.log("response2",response2)
+            // console.log("response2",response2)
 
             setCards([...cards, newCard]);
 
+            setOpenCreateModal(false);
+
         } catch (error) {
-            alert(error.response);
+            const trelloRes = error.response.data.error.message;
+            const apiRes = error.response.data.message;
+            if (!!trelloRes) alert (trelloRes);
+            else alert(apiRes);
             navigate("/404", {replace: true});
         }
     }

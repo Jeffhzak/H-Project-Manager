@@ -13,7 +13,10 @@ module.exports = {
       },
       fontFamily: {
         body: ['Nunito'],
-      }
+      },
+      minWidth: {
+        "decent": "30rem",
+      },
     },
   },
   plugins: [],
