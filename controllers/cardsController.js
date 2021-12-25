@@ -88,7 +88,11 @@ const createNewCard = async (req, res) => {
     }
 
     try {
-        const newCard = await Cards.create(req.body);
+        const incomingCard = req.body;
+        const idCard = incomingCard.id;
+        const idCardCatch = {...incomingCard, idCard:idCard};
+        console.log("idCardCatch",idCardCatch);
+        const newCard = await Cards.create(idCardCatch);
         res.status(201).json({
             success: true,
             newCard: newCard,
@@ -126,7 +130,11 @@ const editCard = async (req, res) => {
     }
 
     try {
-        const newCard = await Cards.findByIdAndUpdate(id, req.body);
+        const incomingCard = req.body;
+        const idCard = incomingCard.id;
+        const idCardCatch = {...incomingCard, idCard:idCard};
+        console.log("idCardCatch",idCardCatch);
+        const newCard = await Cards.findByIdAndUpdate(id, idCardCatch);
         res.status(201).json({
             success: true,
             newCard: newCard,

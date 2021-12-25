@@ -17,7 +17,12 @@ export const List = ({list, cards, setOpenCreateModal, setcurrList, setOpenViewM
         
         const cardsRender = thisListsCards.map((card, index) => {
             return(
-                <Card key={`${card.id}+${index}`} card={card} setOpenViewModal={setOpenViewModal} setCurrCardDetails={setCurrCardDetails}/>
+                <Card key={`${card.id}+${index}`} 
+                card={card} 
+                setOpenViewModal={setOpenViewModal}
+                list={list}
+                setcurrList={setcurrList} 
+                setCurrCardDetails={setCurrCardDetails}/>
             )
         }) 
 

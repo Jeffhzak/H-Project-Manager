@@ -15,7 +15,7 @@ module.exports = {
         body: ['Nunito'],
       },
       minWidth: {
-        "decent": "30rem",
+        "decent": "42rem",
       },
     },
   },
