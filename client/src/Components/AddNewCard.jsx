@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const AddNewCard = ({listID, setOpenCreateModal, setCurrListID}) => {
+export const AddNewCard = ({list, setOpenCreateModal, setcurrList}) => {
 
     const openModal = () => {
-        setCurrListID(listID);
+        setcurrList(list);
         setOpenCreateModal(true);
 
     }
