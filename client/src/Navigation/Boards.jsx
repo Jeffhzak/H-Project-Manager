@@ -5,6 +5,7 @@ import { useAuth } from "../Authentication/AuthProvider";
 import axios from "axios";
 import { List } from '../Components/List';
 import { LoadingBar } from '../Components/LoadingBar';
+import { Modal } from '../Components/Modal';
 
 
 const URL = "https://api.trello.com/1";
@@ -19,6 +20,7 @@ export const Boards = () => {
     const [lists, setLists] = useState([]);
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [openCreateModal, setOpenCreateModal] = useState(false);
 
     useEffect( async () => {
 
@@ -44,13 +46,26 @@ export const Boards = () => {
         setLoading(false);
 
     }, [boardID])
+    
+    //?
+    //! MODAL RELATED FUNCTIONS
+    //*
+    
+    const createNewCard = (listID) => {
+        setOpenCreateModal(true);
+        console.log(listID)
+    }
+    
+    //?
+    //! MODAL RELATED FUNCTIONS
+    //*
 
     const renderLists = () => {
 
         const listRender = lists.map((list, index) => {
             
             return (
-                <List list={list} cards={cards}/>
+                <List key={`${list.id}+${index}`} list={list} cards={cards} createNewCard={createNewCard}/>
             )
         })
         return listRender;
@@ -62,6 +77,7 @@ export const Boards = () => {
             <div className="w-full lg:w-4/5 bg-secondary m-auto rounded p-2 flex gap-2 bg-opacity-50">
             {!loading ? renderLists() : <LoadingBar/>}
             </div>
+            {openCreateModal ? <Modal setOpenCreateModal={setOpenCreateModal} /> : null}
         </>
     )
 }
