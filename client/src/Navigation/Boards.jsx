@@ -81,7 +81,7 @@ export const Boards = () => {
 
             setOpenCreateModal(false);
 
-            toast.success("New Card created!", {
+            toast.success(`New Card "${name}" created!`, {
                 position: "top-center",
                 autoClose: 3000,
             });
