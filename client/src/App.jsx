@@ -59,6 +59,11 @@ function App() {
         {boardSelectRender()}
       </div>
     <Outlet />
+    <footer>
+      <div className="mt-40 border-t-2 flex justify-center items-center flex-col">
+        <span>HPM™ brought to you unsponsered by your favourite corporate overlords.</span>
+      </div>
+    </footer>
     </>
   )
 }
