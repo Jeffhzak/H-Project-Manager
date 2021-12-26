@@ -5,6 +5,8 @@ const Cards = require("../models/cards");
 
 //! SEED/SYNC
 const URL = "https://api.trello.com/1";
+const TRELLO_KEY = process.env.TRELLO_KEY;
+const TRELLO_TOKEN = process.env.TRELLO_TOKEN;
 
 const syncCards = async (req, res) => {
     if (!req.body) {
@@ -56,7 +58,7 @@ const getCardsOnBoard = async (req, res) => {
 
     try {
         const CardsOnBoard = await Cards.find({idBoard:boardID});
-        console.log(CardsOnBoard);
+        // console.log(CardsOnBoard);
         res.status(201).json({
             success: true,
             data: CardsOnBoard,
@@ -91,7 +93,7 @@ const createNewCard = async (req, res) => {
         const incomingCard = req.body;
         const idCard = incomingCard.id;
         const idCardCatch = {...incomingCard, idCard:idCard};
-        console.log("idCardCatch",idCardCatch);
+        // console.log("idCardCatch",idCardCatch);
         const newCard = await Cards.create(idCardCatch);
         res.status(201).json({
             success: true,
@@ -116,12 +118,7 @@ const editCard = async (req, res) => {
             error: "Please provide mongo ID to update."
         });
     }
-    if(!req.body) {
-        return res.status(400).json({
-            success: false,
-            error: "Please provide new card data from Trello."
-        });
-    }
+    
     if(!req.body.name) {
         return res.status(400).json({
             success: false,
@@ -133,7 +130,7 @@ const editCard = async (req, res) => {
         const incomingCard = req.body;
         const idCard = incomingCard.id;
         const idCardCatch = {...incomingCard, idCard:idCard};
-        console.log("idCardCatch",idCardCatch);
+        // console.log("idCardCatch",idCardCatch);
         const newCard = await Cards.findByIdAndUpdate(id, idCardCatch);
         res.status(201).json({
             success: true,
@@ -147,9 +144,48 @@ const editCard = async (req, res) => {
         })
     }
 }
+
+//! DELETE 
+const deleteCard = async (req, res) => {
+    
+    const {cardID} = req.params;
+
+    if(!cardID) {
+        return res.status(400).json({
+            success: false,
+            error: "Please provide card data to delete it."
+        });
+    }
+
+    // console.log("backend deletecard cardcheck passed");
+    // console.log(cardID);
+
+    try {
+        const response = await axios.delete(`${URL}/cards/${cardID}?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}&id=${cardID}`);
+        // console.log("response.data", response.data);
+        
+        const response2 = await Cards.findOneAndDelete({idCard: cardID})
+        // console.log("response2", response2);
+        
+        res.status(201).json({
+            success: true,
+            data: response2,
+            message: "Card successfully deleted!",
+        })
+
+
+    } catch (error) {
+        res.status(400).json({
+            error: error.response,
+            message: "Card update failed! invalid ID?",
+        })
+    }
+}
+
 module.exports = {
     syncCards,
     getCardsOnBoard,
     createNewCard,
     editCard,
+    deleteCard,
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Modal } from '../Modal'
 
-export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, editCard, lists}) => {
+export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, editCard, lists, deleteCard}) => {
     // console.log("lists in viewCardModal",lists)
     const [cardDetails, setCardDetails] = useState(currCardDetails);
 
@@ -62,6 +62,10 @@ export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, edit
     }
 
     const handleDelete = () => {
+
+        deleteCard(cardDetails);
+        setDeleteConfirm(false);
+        setOpenViewModal(false);
         
     }
 
@@ -75,7 +79,7 @@ export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, edit
                     <div className="flex gap-2 items-center">
                         <span>You sure? There's no undoing this.</span>
                         <button className="w-16 btn_neutral bg-bgl" onClick={() => setDeleteConfirm(false)} >No</button>
-                        <button className="w-16 btn_neutral bg-primary">Do it.</button>
+                        <button className="w-16 btn_neutral bg-primary" onClick={handleDelete}>Do it.</button>
                     </div>
                     :
                     <button className="btn_neutral bg-sky-800" onClick={() => setDeleteConfirm(true)}>Delete</button>
