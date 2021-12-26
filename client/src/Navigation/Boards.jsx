@@ -72,7 +72,7 @@ export const Boards = () => {
 
             const response2 = await axios.post(`http://localhost:3001/api/cards/new`, newCard)
 
-            console.log("response2",response2);
+            // console.log("response2",response2);
             const newCardMongo = response2.data.newCard;
 
             setCards([...cards, newCardMongo]);
@@ -105,7 +105,7 @@ export const Boards = () => {
 
             const response2 = await axios.put(`http://localhost:3001/api/cards/${mongoID}`, newCard)
 
-            console.log("response2",response2.data);
+            // console.log("response2",response2.data);
             // const newCardMongo = response2.data.newCard;
             // console.log(newCardMongo);
 
@@ -121,6 +121,25 @@ export const Boards = () => {
             else alert(apiRes);
             navigate("/404", {replace: true});
         }
+    }
+
+    const deleteCard = async (thisCard) => {
+        // console.log(thisCard);
+
+        const cardID = thisCard.idCard;
+
+        try {
+            const response = await axios.delete(`http://localhost:3001/api/cards/${cardID}`);
+
+            // console.log("frontend response",response);
+            const cardArrayButDeletedRemoved = cards.filter(x => x.idCard !== cardID);
+            setCards(cardArrayButDeletedRemoved);
+            alert(`Your card "${thisCard.name}" was deleted!`);
+
+        } catch (error) {
+            console.log(error.response.data);
+        }
+
     }
     
     //?
@@ -165,7 +184,8 @@ export const Boards = () => {
             setOpenViewModal={setOpenViewModal}
             currCardDetails={currCardDetails}
             editCard={editCard} 
-            lists={lists}/>
+            lists={lists}
+            deleteCard={deleteCard}/>
             : null}
         </>
     )

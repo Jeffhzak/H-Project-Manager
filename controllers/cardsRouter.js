@@ -14,4 +14,7 @@ router.post("/new", cardsController.createNewCard);
 //! UPDATE
 router.put("/:id", cardsController.editCard);
 
+//! DELETE
+router.delete("/:cardID", cardsController.deleteCard);
+
 module.exports = router;
