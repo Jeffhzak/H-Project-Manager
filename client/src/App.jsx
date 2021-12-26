@@ -4,6 +4,8 @@ import { useAuth } from "./Authentication/AuthProvider"
 import axios from "axios"
 import { HomeIcon } from './Components/CustomIcons/HomeIcon';
 import { RefreshIcon } from './Components/CustomIcons/RefreshIcon';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 
 function App() {
@@ -16,7 +18,12 @@ function App() {
     {
       userData,
     });
-    alert("Force Sync complete!");
+    
+    toast.success("Force Sync complete!", {
+      position: "top-center",
+      autoClose: 3000,
+  });
+    
     navigate("/", {replace: true});
 
   }
@@ -64,6 +71,7 @@ function App() {
         <span>HPM™ brought to you unsponsered by your favourite corporate overlords.</span>
       </div>
     </footer>
+    <ToastContainer theme="dark" toastStyle={{backgroundColor:"#393E46"}}/>
     </>
   )
 }

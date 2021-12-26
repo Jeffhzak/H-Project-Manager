@@ -7,6 +7,8 @@ import { List } from '../Components/List';
 import { LoadingBar } from '../Components/LoadingBar';
 import { NewCardModal } from '../Components/CustomModals/NewCardModal';
 import { ViewCardModal } from '../Components/CustomModals/ViewCardModal';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 
 const URL = "https://api.trello.com/1";
@@ -79,6 +81,11 @@ export const Boards = () => {
 
             setOpenCreateModal(false);
 
+            toast.success("New Card created!", {
+                position: "top-center",
+                autoClose: 3000,
+            });
+
         } catch (error) {
             const trelloRes = error?.response?.data;
             const apiRes = error?.response?.data?.message;
@@ -113,6 +120,10 @@ export const Boards = () => {
             
             setCards([...cardArrayButOldRemoved, editedCard]);
             // setOpenViewModal(false);
+            toast.success("Card edited!", {
+                position: "top-center",
+                autoClose: 3000,
+            });
 
         } catch (error) {
             const trelloRes = error?.response?.data;
@@ -134,7 +145,10 @@ export const Boards = () => {
             // console.log("frontend response",response);
             const cardArrayButDeletedRemoved = cards.filter(x => x.idCard !== cardID);
             setCards(cardArrayButDeletedRemoved);
-            alert(`Your card "${thisCard.name}" was deleted!`);
+            toast.success(`Your card "${thisCard.name}" was deleted!`, {
+                position: "top-center",
+                autoClose: 3000,
+            });
 
         } catch (error) {
             console.log(error.response.data);
@@ -187,6 +201,8 @@ export const Boards = () => {
             lists={lists}
             deleteCard={deleteCard}/>
             : null}
+
+            <ToastContainer theme="dark" toastStyle={{backgroundColor:"#393E46"}}/>
         </>
     )
 }
