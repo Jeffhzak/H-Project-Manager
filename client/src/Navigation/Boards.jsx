@@ -45,7 +45,7 @@ export const Boards = () => {
 
         }
 
-        const fetchCards = await axios.get(`http://localhost:3001/api/cards/${boardID}`);
+        const fetchCards = await axios.get(`/api/cards/${boardID}`);
         const cardsData = fetchCards.data;
         // console.log("cardsData", cardsData.data);
         setCards(cardsData.data);
@@ -72,7 +72,7 @@ export const Boards = () => {
 
             // console.log(newCard);
 
-            const response2 = await axios.post(`http://localhost:3001/api/cards/new`, newCard)
+            const response2 = await axios.post(`/api/cards/new`, newCard)
 
             // console.log("response2",response2);
             const newCardMongo = response2.data.newCard;
@@ -110,7 +110,7 @@ export const Boards = () => {
 
             // console.log(newCard);
 
-            const response2 = await axios.put(`http://localhost:3001/api/cards/${mongoID}`, newCard)
+            const response2 = await axios.put(`/api/cards/${mongoID}`, newCard)
 
             // console.log("response2",response2.data);
             // const newCardMongo = response2.data.newCard;
@@ -140,7 +140,7 @@ export const Boards = () => {
         const cardID = thisCard.idCard;
 
         try {
-            const response = await axios.delete(`http://localhost:3001/api/cards/${cardID}`);
+            const response = await axios.delete(`/api/cards/${cardID}`);
 
             // console.log("frontend response",response);
             const cardArrayButDeletedRemoved = cards.filter(x => x.idCard !== cardID);
