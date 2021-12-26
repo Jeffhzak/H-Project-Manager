@@ -2,6 +2,8 @@ import { Outlet, useNavigate } from 'react-router'
 import { Link } from "react-router-dom"
 import { useAuth } from "./Authentication/AuthProvider"
 import axios from "axios"
+import { HomeIcon } from './Components/CustomIcons/HomeIcon';
+import { RefreshIcon } from './Components/CustomIcons/RefreshIcon';
 
 
 function App() {
@@ -40,11 +42,17 @@ function App() {
           <h1>Welcome back, {userData.userName}!</h1>
         </div>
         <div className="flex gap-2">
-          <button className="btn" onClick={()=>console.log(userData)}>log userData</button>
+          {/* <button className="btn" onClick={()=>console.log(userData)}>log userData</button> */}
           <Link to="/">
-            <button className="btn">Home</button>
+            <button className="btn flex gap-1 items-center">
+              <HomeIcon/>
+              Home
+            </button>
           </Link>
-          <button className="btn" onClick={()=>forceSync()}>Force Sync</button>
+          <button className="btn flex gap-1 items-center" onClick={()=>forceSync()}>
+            <RefreshIcon/>
+            Force Sync
+            </button>
         </div>
       </div>
       <div className="flex gap-2 mb-2 justify-center">

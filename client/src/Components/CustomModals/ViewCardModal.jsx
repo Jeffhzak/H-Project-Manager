@@ -141,7 +141,7 @@ export const ViewCardModal = ({setOpenViewModal, currList, currCardDetails, edit
             :
             <div className="footer flex flex-row-reverse gap-2 pt-2">
 
-                <button className="bg-primary btn_neutral" onClick={handleEdit}>Edit</button>
+                <button className="bg-primary btn_neutral w-16" onClick={handleEdit}>Edit</button>
                 <button className="bg-bgl btn_neutral" onClick={() => setOpenViewModal(false)}>Close</button>
 
             </div>
