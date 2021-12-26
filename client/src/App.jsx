@@ -14,7 +14,7 @@ function App() {
   const navigate = useNavigate();
 
   const forceSync = async () => {
-    axios.put(`http://localhost:3001/api/cards/sync`, 
+    axios.put(`/api/cards/sync`, 
     {
       userData,
     });
